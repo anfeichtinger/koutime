@@ -35,8 +35,8 @@ const MaterialColor textSwatch = MaterialColor(_textColor, <int, Color>{
 final ThemeData lightTheme = ThemeData(
   primarySwatch: primarySwatch,
   brightness: Brightness.light,
-  scaffoldBackgroundColor: textSwatch.shade100,
-  backgroundColor: textSwatch.shade100,
+  scaffoldBackgroundColor: textSwatch.shade200,
+  backgroundColor: textSwatch.shade200,
   cardColor: Colors.white,
   bottomAppBarColor: Colors.white,
   dividerColor: const Color(0x1C000000),
@@ -46,66 +46,79 @@ final ThemeData lightTheme = ThemeData(
       color: textSwatch.shade700,
       fontWeight: FontWeight.w300,
       fontFamily: 'Nunito',
+      fontSize: 98,
     ),
     headline2: TextStyle(
       color: textSwatch.shade600,
       fontWeight: FontWeight.w300,
       fontFamily: 'Nunito',
+      fontSize: 62,
     ),
     headline3: TextStyle(
       color: textSwatch.shade700,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 50,
     ),
     headline4: TextStyle(
       color: textSwatch.shade700,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 36,
     ),
     headline5: TextStyle(
       color: textSwatch.shade600,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 26,
     ),
     headline6: TextStyle(
       color: textSwatch.shade700,
       fontWeight: FontWeight.w500,
       fontFamily: 'Nunito',
+      fontSize: 22,
     ),
     subtitle1: TextStyle(
       color: textSwatch.shade700,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 18,
     ),
     subtitle2: TextStyle(
       color: textSwatch.shade600,
       fontWeight: FontWeight.w500,
       fontFamily: 'Nunito',
+      fontSize: 16,
     ),
     bodyText1: TextStyle(
       color: textSwatch.shade700,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 18,
     ),
     bodyText2: TextStyle(
       color: textSwatch.shade500,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 16,
     ),
     button: TextStyle(
       color: textSwatch.shade500,
       fontWeight: FontWeight.w500,
       fontFamily: 'Nunito',
+      fontSize: 16,
     ),
     caption: TextStyle(
       color: textSwatch.shade500,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 14,
     ),
     overline: TextStyle(
       color: textSwatch.shade500,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 12,
     ),
   ),
 );
@@ -116,72 +129,86 @@ final ThemeData darkTheme = lightTheme.copyWith(
   backgroundColor: const Color(0xFF18181B),  // zinc-900
   cardColor: const Color(0xFF262626),  // neutral-800
   bottomAppBarColor: const Color(0xFF27272A),  // zinc-800
+  dialogBackgroundColor: const Color(0xFF262626),  // neutral-800
   dividerColor: const Color(0x1CFFFFFF),
   textTheme: TextTheme(
     headline1: TextStyle(
       color: textSwatch.shade200,
       fontWeight: FontWeight.w300,
       fontFamily: 'Nunito',
+      fontSize: 98,
     ),
     headline2: TextStyle(
       color: textSwatch.shade300,
       fontWeight: FontWeight.w300,
       fontFamily: 'Nunito',
+      fontSize: 60,
     ),
     headline3: TextStyle(
       color: textSwatch.shade200,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 50,
     ),
     headline4: TextStyle(
       color: textSwatch.shade200,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 36,
     ),
     headline5: TextStyle(
       color: textSwatch.shade300,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 26,
     ),
     headline6: TextStyle(
       color: textSwatch.shade200,
       fontWeight: FontWeight.w500,
       fontFamily: 'Nunito',
+      fontSize: 22,
     ),
     subtitle1: TextStyle(
       color: textSwatch.shade200,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 18,
     ),
     subtitle2: TextStyle(
       color: textSwatch.shade300,
       fontWeight: FontWeight.w500,
       fontFamily: 'Nunito',
+      fontSize: 16,
     ),
     bodyText1: TextStyle(
       color: textSwatch.shade300,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 18,
     ),
     bodyText2: TextStyle(
       color: textSwatch.shade200,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 16,
     ),
     button: TextStyle(
       color: textSwatch.shade400,
       fontWeight: FontWeight.w500,
       fontFamily: 'Nunito',
+      fontSize: 16,
     ),
     caption: TextStyle(
       color: textSwatch.shade400,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 14,
     ),
     overline: TextStyle(
       color: textSwatch.shade400,
       fontWeight: FontWeight.normal,
       fontFamily: 'Nunito',
+      fontSize: 12,
     ),
   ),
 );

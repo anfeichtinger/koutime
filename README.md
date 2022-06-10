@@ -1,5 +1,5 @@
-# Flutter Production Boilerplate Riverpod
-## A flutter project containing riverpod, flutter_lints, hive, easy_translations and more!
+# Koutime
+## A time management application.
 
 This repository is the starting point for my personal projects. If you have any suggestions or improvements feel free to let me know. The project strives to implement best practices recommended by Google and other developers. These best practices include but are not limited to:
 
@@ -14,8 +14,8 @@ This repository requires [Flutter](https://flutter.dev/docs/get-started/install)
 
 Clone the project and enter the project folder.
 ```sh
-git clone https://github.com/anfeichtinger/flutter_production_boilerplate_riverpod.git
-cd flutter_production_boilerplate_riverpod
+git clone https://github.com/anfeichtinger/koutime.git
+cd koutime
 ```
 
 You can remove the screenshots located in [assets/img/](./assets/img).

@@ -1,0 +1,148 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:5192397300323129847",
+      "lastPropertyId": "6:6059709835430750520",
+      "name": "Month",
+      "properties": [
+        {
+          "id": "1:720396459505714038",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "3:4763516196634652698",
+          "name": "year",
+          "type": 6
+        },
+        {
+          "id": "4:148171271825199074",
+          "name": "number",
+          "type": 6
+        },
+        {
+          "id": "5:2477051764002624760",
+          "name": "carry",
+          "type": 8
+        },
+        {
+          "id": "6:6059709835430750520",
+          "name": "readonly",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:6383508078216062810",
+      "lastPropertyId": "9:9057858390306747444",
+      "name": "Day",
+      "properties": [
+        {
+          "id": "1:7386746672649814314",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8964914201680501388",
+          "name": "from",
+          "type": 10
+        },
+        {
+          "id": "3:1628526945423736411",
+          "name": "to",
+          "type": 10
+        },
+        {
+          "id": "4:2871653282005717570",
+          "name": "multiplier",
+          "type": 8
+        },
+        {
+          "id": "5:3804460554222883126",
+          "name": "comment",
+          "type": 9
+        },
+        {
+          "id": "6:6604157723000032491",
+          "name": "weekId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:5856548904003195935",
+          "relationTarget": "Week"
+        },
+        {
+          "id": "7:5479438870719146718",
+          "name": "dbUsage",
+          "type": 6
+        },
+        {
+          "id": "8:6058180800672501988",
+          "name": "breakFrom",
+          "type": 10
+        },
+        {
+          "id": "9:9057858390306747444",
+          "name": "breakTo",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:3382722117644197551",
+      "lastPropertyId": "5:3040054646814226925",
+      "name": "Week",
+      "properties": [
+        {
+          "id": "1:3462837510657558833",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6530099712247829131",
+          "name": "number",
+          "type": 6
+        },
+        {
+          "id": "3:7572205287680496916",
+          "name": "monthId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:5574288782125617866",
+          "relationTarget": "Month"
+        },
+        {
+          "id": "4:7826563248356624414",
+          "name": "dbEnabledDays",
+          "type": 9
+        },
+        {
+          "id": "5:3040054646814226925",
+          "name": "hourGoal",
+          "type": 8
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:3382722117644197551",
+  "lastIndexId": "2:5574288782125617866",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    7660174233562581330
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="dev.feichtinger.flutter_production_boilerplate_riverpod">
+    package="dev.feichtinger.koutime">
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="flutter_production_boilerplate_riverpod">
+        android:label="Koutime">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

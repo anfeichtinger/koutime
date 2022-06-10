@@ -1,5 +1,5 @@
-name: flutter_production_boilerplate_riverpod
-description: A flutter boilerplate project containing riverpod, lints, hive, easy_translations and more
+name: koutime
+description: A time management application.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.0.3+1
+version: 0.0.1+1
 
 environment:
   sdk: ">=2.17.1 <3.0.0"
@@ -34,10 +34,13 @@ dependencies:
   path_provider: ^2.0.10
   flutter_displaymode: ^0.4.0
   easy_localization: ^3.0.1
-  hive: ^2.2.1
-  hive_flutter: ^1.1.0
   url_launcher: ^6.1.2
   ionicons: ^0.1.2
+  objectbox: ^1.5.0
+  objectbox_flutter_libs: any
+  hive: ^2.2.1
+  hive_flutter: ^1.1.0
+  bottom_picker: ^1.8.0
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +52,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
+  build_runner: ^2.0.0
+  objectbox_generator: any
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -59,7 +64,7 @@ flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-  # uses-material-design: true
+  uses-material-design: true
 
   assets:
     - assets/translations/
@@ -75,6 +80,9 @@ flutter:
           weight: 400
         - asset: assets/fonts/Nunito-Light.ttf
           weight: 300
+    - family: Pacifico
+      fonts:
+        - asset: assets/fonts/Pacifico-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
