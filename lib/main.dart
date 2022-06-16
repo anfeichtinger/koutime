@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'config/router.dart';
@@ -58,26 +59,31 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeModeState currentTheme = ref.watch(themeProvider);
 
-    return MaterialApp(
-      /// Localization is not available for the title.
-      title: 'Koutime',
+    return ScreenUtilInit(
+        // designSize: const Size(360, 690),
+        minTextAdapt: true,
+        builder: (BuildContext context, Widget? child) {
+          return MaterialApp(
+            /// Localization is not available for the title.
+            title: 'Koutime',
 
-      /// Theme stuff
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: currentTheme.themeMode,
+            /// Theme stuff
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: currentTheme.themeMode,
 
-      /// Localization stuff
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
+            /// Localization stuff
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
 
-      /// Route stuff
-      routes: routes,
-      initialRoute: '/',
+            /// Route stuff
+            routes: routes,
+            initialRoute: '/',
 
-      /// Misc
-      debugShowCheckedModeBanner: false,
-    );
+            /// Misc
+            debugShowCheckedModeBanner: false,
+          );
+        });
   }
 }

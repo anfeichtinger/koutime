@@ -2,6 +2,7 @@ import 'package:bottom_picker/bottom_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../data/models/day.dart';
@@ -14,6 +15,8 @@ class CreateFree extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Day day = ref.watch(createDayProvider).day;
+    final TextEditingController commentController =
+        TextEditingController(text: day.comment);
 
     return ListView(
       padding: EdgeInsets.zero,
@@ -25,7 +28,7 @@ class CreateFree extends ConsumerWidget {
           color: Theme.of(context).cardColor,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
-              Radius.circular(12),
+              Radius.circular(16),
             ),
           ),
           child: Column(
@@ -61,7 +64,6 @@ class CreateFree extends ConsumerWidget {
                   ).show(context);
                 },
                 child: ListTile(
-                  visualDensity: VisualDensity.compact,
                   leading: Icon(
                     Ionicons.time_outline,
                     color: Theme.of(context).textTheme.caption!.color,
@@ -73,7 +75,7 @@ class CreateFree extends ConsumerWidget {
                   trailing: Text(
                     DateFormat('E d MMM y', context.locale.toString())
                         .format(day.from),
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
               ),
@@ -107,7 +109,6 @@ class CreateFree extends ConsumerWidget {
                   ).show(context);
                 },
                 child: ListTile(
-                  visualDensity: VisualDensity.compact,
                   leading: const SizedBox(),
                   title: Text(
                     'Until',
@@ -116,7 +117,7 @@ class CreateFree extends ConsumerWidget {
                   trailing: Text(
                     DateFormat('E d MMM y', context.locale.toString())
                         .format(day.to),
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
               ),
@@ -133,25 +134,35 @@ class CreateFree extends ConsumerWidget {
           elevation: 0,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextFormField(
+          child: ListTile(
+            leading: Icon(
+              Ionicons.chatbubble_ellipses_outline,
+              color: Theme.of(context).textTheme.caption!.color,
+            ),
+            title: TextFormField(
+              controller: commentController,
               keyboardType: TextInputType.text,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2!
-                  .apply(fontWeightDelta: -1, fontSizeDelta: -1),
+              style: Theme.of(context).textTheme.subtitle2,
               decoration: InputDecoration(
-                  hintText: tr('Add comment...'),
-                  hintStyle: Theme.of(context).textTheme.bodyText1!.apply(
+                hintText: tr('Add comment...'),
+                hintStyle: Theme.of(context).textTheme.bodyText1!.apply(
                       fontWeightDelta: -1,
-                      fontSizeDelta: -1,
+                      fontSizeDelta: -1.sp,
                       color: Theme.of(context)
                           .textTheme
                           .bodyText1!
                           .color!
-                          .withOpacity(0.6)),
-                  border: InputBorder.none),
+                          .withOpacity(0.6),
+                    ),
+                border: InputBorder.none,
+              ),
+              onChanged: (String comment) {
+                day.comment = comment;
+              },
+              onEditingComplete: () {
+                ref.read(createDayProvider.notifier).day = day;
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
             ),
           ),
         ),

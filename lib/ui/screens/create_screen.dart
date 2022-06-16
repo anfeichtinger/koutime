@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../data/enums/day_usage_enum.dart';
@@ -64,11 +65,11 @@ class CreateScreen extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             physics: const BouncingScrollPhysics(),
             children: <Widget>[
-              const SizedBox(height: 24),
+              SizedBox(height: 24.sp),
               const TypeTabs(),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.sp),
               getPartialBasedOnUsage(currentUsage),
-              const SizedBox(height: 48),
+              SizedBox(height: 48.sp),
             ]),
       ),
     );
