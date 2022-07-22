@@ -37,7 +37,7 @@ class CreateSick extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   BottomPicker.date(
-                    title: tr('Sick leave start'),
+                    title: tr('Sick leave from'),
                     titleStyle: Theme.of(context)
                         .textTheme
                         .subtitle2!
@@ -83,7 +83,7 @@ class CreateSick extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   BottomPicker.date(
-                    title: tr('Sick leave end'),
+                    title: tr('Sick leave until'),
                     titleStyle: Theme.of(context)
                         .textTheme
                         .subtitle2!
@@ -126,12 +126,12 @@ class CreateSick extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 24.sp),
         const SectionTitle(
           padding: EdgeInsets.symmetric(horizontal: 4),
           text: 'Additional',
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.sp),
         Card(
           elevation: 0,
           shape: const RoundedRectangleBorder(

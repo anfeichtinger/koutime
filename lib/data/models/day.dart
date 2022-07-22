@@ -1,6 +1,7 @@
 import 'package:objectbox/objectbox.dart';
 
 import '../enums/day_usage_enum.dart';
+import 'break.dart';
 import 'week.dart';
 
 @Entity()
@@ -9,8 +10,6 @@ class Day {
       {this.id = 0,
       required this.from,
       required this.to,
-      this.breakFrom,
-      this.breakTo,
       this.usage = DayUsage.shift,
       this.multiplier = 1.0,
       this.comment});
@@ -20,15 +19,12 @@ class Day {
   DateTime from = DateTime.now();
   @Property(type: PropertyType.date)
   DateTime to = DateTime.now().add(const Duration(hours: 8, minutes: 30));
-  @Property(type: PropertyType.date)
-  DateTime? breakFrom;
-  @Property(type: PropertyType.date)
-  DateTime? breakTo;
   DayUsage usage = DayUsage.shift;
   double multiplier = 1.0;
   String? comment;
 
   /// Relations
+  final ToMany<Break> breaks = ToMany<Break>();
   final ToOne<Week> week = ToOne<Week>();
 
   /// The DayUsage enum is not supported by ObjectBox.
@@ -53,6 +49,6 @@ class Day {
 
   @override
   String toString() {
-    return 'Day{id: $id, from: $from, to: $to, breakFrom: $breakFrom, breakTo: $breakTo, usage: $usage, multiplier: $multiplier, comment: $comment}';
+    return 'Day{id: $id, from: $from, to: $to, usage: $usage, multiplier: $multiplier, comment: $comment}';
   }
 }

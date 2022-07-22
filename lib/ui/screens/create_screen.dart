@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../data/enums/day_usage_enum.dart';
+import '../../data/models/day.dart';
+import '../../main.dart';
 import '../../states/screens/create_screen/create_day_states.dart';
 import '../widgets/app_bar_base.dart';
 import '../widgets/bottom_application_bar.dart';
@@ -20,7 +22,7 @@ class CreateScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
-    final DayUsage currentUsage = ref.watch(createDayProvider).day.usage;
+    final Day day = ref.watch(createDayProvider).day;
     return Scaffold(
       appBar: AppBarBase(
         title: Padding(
@@ -55,7 +57,23 @@ class CreateScreen extends ConsumerWidget {
               icon: Ionicons.save_outline,
               text: 'Save',
               onPressed: () {
-                Navigator.of(context).pop();
+                // Todo validation
+                switch (day.usage) {
+                  case DayUsage.holiday:
+                  case DayUsage.free:
+                  case DayUsage.sick:
+                    day.from =
+                        DateTime(day.from.year, day.from.month, day.from.day);
+                    day.to = DateTime(day.to.year, day.to.month, day.to.day, 23, 59, 59);
+                    day.breaks.removeWhere((_) => true);
+                    day.multiplier = 1;
+                    db.store.box<Day>().put(day);
+                    break;
+                  case DayUsage.shift:
+                    // Todo create shift
+                    break;
+                }
+                Navigator.of(context).pop(day);
               },
             )
           : null,
@@ -68,7 +86,7 @@ class CreateScreen extends ConsumerWidget {
               SizedBox(height: 24.sp),
               const TypeTabs(),
               SizedBox(height: 16.sp),
-              getPartialBasedOnUsage(currentUsage),
+              getPartialBasedOnUsage(day.usage),
               SizedBox(height: 48.sp),
             ]),
       ),

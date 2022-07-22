@@ -41,7 +41,7 @@ final ThemeData lightTheme = ThemeData(
   cardColor: const Color(0xFFFAFAFA), // neutral-50
   bottomAppBarColor: Colors.white,
   dividerColor: const Color(0x1C000000),
-  highlightColor: textSwatch.shade100,
+  highlightColor: primarySwatch.shade500.withOpacity(.2),
   fontFamily: 'Nunito',
   textTheme: TextTheme(
     headline1: TextStyle(
@@ -133,7 +133,7 @@ final ThemeData darkTheme = lightTheme.copyWith(
   bottomAppBarColor: const Color(0xFF27272A),  // zinc-800
   dialogBackgroundColor: const Color(0xFF262626),  // neutral-800
   dividerColor: const Color(0x1CFFFFFF),
-  highlightColor: const Color(0xFF3F3F46),
+  highlightColor: primarySwatch.shade500.withOpacity(.2),
   textTheme: TextTheme(
     headline1: TextStyle(
       color: textSwatch.shade200,

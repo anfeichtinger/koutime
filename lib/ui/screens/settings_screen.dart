@@ -2,10 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../widgets/app_bar_gone.dart';
+import '../widgets/app_bar_base.dart';
 import '../widgets/bottom_application_bar.dart';
 import '../widgets/extended_fab.dart';
-import '../widgets/header.dart';
 import '../widgets/settings_screen/theme_card.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -14,7 +13,18 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarGone(),
+      appBar: AppBarBase(
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            tr('Settings'),
+            style: Theme.of(context)
+                .textTheme
+                .headline6!
+                .apply(fontWeightDelta: 1, fontSizeDelta: -1),
+          ),
+        ),
+      ),
       bottomNavigationBar: BottomApplicationBar(
         leftWidgets: <Widget>[
           IconButton(
@@ -32,8 +42,8 @@ class SettingsScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ExtendedFab(
-        icon: Ionicons.heart_outline,
-        text: 'Donate',
+        icon: Ionicons.star_outline,
+        text: 'Rate',
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -44,9 +54,9 @@ class SettingsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             physics: const BouncingScrollPhysics(),
             children: <Widget>[
-              const Header(text: 'bottom_nav_second'),
+              const SizedBox(height: 24),
               Card(
-                elevation: 2,
+                elevation: 0,
 
                 /// Example: Many items have their own colors inside of the ThemData
                 /// You can overwrite them in [config/theme.dart].

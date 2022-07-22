@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 
+import '../../../data/models/break.dart';
 import '../../../data/models/day.dart';
 import '../../../states/screens/create_screen/create_day_states.dart';
 import 'section_title.dart';
@@ -42,7 +43,7 @@ class CreateShift extends ConsumerWidget {
                 title: GestureDetector(
                   onTap: () {
                     BottomPicker.date(
-                      title: tr('Shift start'),
+                      title: tr('Shift from'),
                       titleStyle: Theme.of(context)
                           .textTheme
                           .subtitle2!
@@ -77,7 +78,7 @@ class CreateShift extends ConsumerWidget {
                 trailing: GestureDetector(
                   onTap: () {
                     BottomPicker.time(
-                      title: tr('Shift start'),
+                      title: tr('Shift from'),
                       titleStyle: Theme.of(context)
                           .textTheme
                           .subtitle2!
@@ -120,7 +121,7 @@ class CreateShift extends ConsumerWidget {
                 title: GestureDetector(
                   onTap: () {
                     BottomPicker.date(
-                      title: tr('Shift end'),
+                      title: tr('Shift until'),
                       titleStyle: Theme.of(context)
                           .textTheme
                           .subtitle2!
@@ -155,7 +156,7 @@ class CreateShift extends ConsumerWidget {
                 trailing: GestureDetector(
                   onTap: () {
                     BottomPicker.time(
-                      title: tr('Shift end'),
+                      title: tr('Shift until'),
                       titleStyle: Theme.of(context)
                           .textTheme
                           .subtitle2!
@@ -193,269 +194,293 @@ class CreateShift extends ConsumerWidget {
             ],
           ),
         ),
-        SizedBox(height: 8.sp),
-        if (day.breakFrom == null)
-          Card(
-            elevation: 0,
-            color: Theme.of(context).cardColor,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(16),
+        SizedBox(height: 24.sp),
+        SectionTitle(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          text: 'Breaks',
+          trailing: InkWell(
+            onTap: () async {
+              final DateTime from = day.from.add(const Duration(hours: 4));
+              final Break newBreak = Break(
+                from: from,
+                to: from.add(const Duration(minutes: 30)),
+              );
+              day.breaks.add(newBreak);
+              ref.read(createDayProvider.notifier).day = day;
+              BottomPicker.time(
+                title: tr('Break from'),
+                titleStyle: Theme.of(context)
+                    .textTheme
+                    .subtitle2!
+                    .apply(fontWeightDelta: 2),
+                onChange: (dynamic index) {
+                  final DateTime result = index as DateTime;
+                  day.breaks.removeLast();
+                  newBreak.from = DateTime(
+                      newBreak.from.year,
+                      newBreak.from.month,
+                      newBreak.from.day,
+                      result.hour,
+                      result.minute);
+                  day.breaks.add(newBreak);
+                  ref.read(createDayProvider.notifier).day = day;
+                },
+                use24hFormat: MediaQuery.of(context).alwaysUse24HourFormat,
+                backgroundColor: Theme.of(context).cardColor,
+                pickerTextStyle: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .apply(fontWeightDelta: 2, fontSizeDelta: -2),
+                initialDateTime: newBreak.from,
+                minDateTime: day.from,
+                maxDateTime: day.to,
+                displaySubmitButton: false,
+                dismissable: true,
+                closeIconColor: Colors.transparent,
+              ).show(context);
+            },
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                tr('Add'),
+                style: Theme.of(context).textTheme.caption!.apply(
+                      color: Theme.of(context).primaryColor,
+                      fontWeightDelta: 2,
+                    ),
               ),
             ),
-            child: InkWell(
-              onTap: () {
-                day.breakFrom ??= day.from;
-                day.breakTo ??= day.to;
-                ref.read(createDayProvider.notifier).day = day;
-
-                BottomPicker.time(
-                  title: tr('Break start'),
-                  titleStyle: Theme.of(context)
-                      .textTheme
-                      .subtitle2!
-                      .apply(fontWeightDelta: 2),
-                  onChange: (dynamic index) {
-                    final DateTime result = index as DateTime;
-                    day.breakFrom = DateTime(
-                        day.breakFrom?.year ?? day.from.year,
-                        day.breakFrom?.month ?? day.from.month,
-                        day.breakFrom?.day ?? day.from.day,
-                        result.hour,
-                        result.minute);
-                    ref.read(createDayProvider.notifier).day = day;
-                  },
-                  use24hFormat: MediaQuery.of(context).alwaysUse24HourFormat,
-                  backgroundColor: Theme.of(context).cardColor,
-                  pickerTextStyle: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .apply(fontWeightDelta: 2, fontSizeDelta: -2),
-                  initialDateTime: day.breakFrom,
-                  minDateTime: day.from,
-                  maxDateTime: day.to,
-                  displaySubmitButton: false,
-                  dismissable: true,
-                  closeIconColor: Colors.transparent,
-                ).show(context);
-              },
-              splashColor: Theme.of(context).primaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(16)),
-              child: ListTile(
-                leading: Icon(
-                  Ionicons.cafe_outline,
-                  color: Theme.of(context).textTheme.caption!.color,
-                ),
-                title: Text(
-                  tr('Add break...'),
-                  style: Theme.of(context).textTheme.subtitle2,
-                ),
-              ),
-            ),
-          )
-        else
-          Card(
-            elevation: 0,
-            color: Theme.of(context).cardColor,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(16),
-              ),
+          ),
+        ),
+        SizedBox(height: 4.sp),
+        if (day.breaks.isEmpty)
+          Container(
+            margin: const EdgeInsets.all(4),
+            decoration: const BoxDecoration(
+              // color: Theme.of(context).cardColor.withOpacity(.4),
+              borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                ListTile(
-                  leading: Icon(
-                    Ionicons.cafe_outline,
-                    color: Theme.of(context).textTheme.caption!.color,
-                  ),
-                  title: GestureDetector(
-                    onTap: () {
-                      BottomPicker.date(
-                        title: tr('Break start'),
-                        titleStyle: Theme.of(context)
-                            .textTheme
-                            .subtitle2!
-                            .apply(fontWeightDelta: 2),
-                        onChange: (dynamic index) {
-                          final DateTime result = index as DateTime;
-                          day.breakFrom = DateTime(
-                            result.year,
-                            result.month,
-                            result.day,
-                            day.breakFrom?.hour ?? day.from.hour,
-                            day.breakFrom?.minute ?? day.from.minute,
-                          );
-                          ref.read(createDayProvider.notifier).day = day;
-                        },
-                        backgroundColor: Theme.of(context).cardColor,
-                        pickerTextStyle: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .apply(fontWeightDelta: 2, fontSizeDelta: -2),
-                        initialDateTime: day.breakFrom,
-                        minDateTime: day.from,
-                        maxDateTime: day.to,
-                        displaySubmitButton: false,
-                        dismissable: true,
-                        closeIconColor: Colors.transparent,
-                      ).show(context);
-                    },
-                    child: Text(
-                      DateFormat(
-                        'E d MMM y',
-                        context.locale.toString(),
-                      ).format(day.breakFrom!),
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      BottomPicker.time(
-                        title: tr('Break start'),
-                        titleStyle: Theme.of(context)
-                            .textTheme
-                            .subtitle2!
-                            .apply(fontWeightDelta: 2),
-                        onChange: (dynamic index) {
-                          final DateTime result = index as DateTime;
-                          day.breakFrom = DateTime(
-                              day.breakFrom?.year ?? day.from.year,
-                              day.breakFrom?.month ?? day.from.month,
-                              day.breakFrom?.day ?? day.from.day,
-                              result.hour,
-                              result.minute);
-                          ref.read(createDayProvider.notifier).day = day;
-                        },
-                        use24hFormat:
-                            MediaQuery.of(context).alwaysUse24HourFormat,
-                        backgroundColor: Theme.of(context).cardColor,
-                        pickerTextStyle: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .apply(fontWeightDelta: 2, fontSizeDelta: -2),
-                        initialDateTime: day.breakFrom,
-                        minDateTime: day.from,
-                        maxDateTime: day.to,
-                        displaySubmitButton: false,
-                        dismissable: true,
-                        closeIconColor: Colors.transparent,
-                      ).show(context);
-                    },
-                    child: Text(
-                      DateFormat(
-                        'H:mm', // Todo get 24h format from prefs
-                        context.locale.toString(),
-                      ).format(day.breakFrom!),
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
+                Icon(
+                  Ionicons.cafe_outline,
+                  size: 22.sp,
+                  color: Theme.of(context).textTheme.caption!.color,
                 ),
-                ListTile(
-                  leading: IconButton(
-                    icon: Icon(
-                      Ionicons.close_outline,
-                      color: Theme.of(context).errorColor,
-                    ),
-                    visualDensity: VisualDensity.compact,
-                    splashRadius: 16,
-                    padding: EdgeInsets.zero,
-                    constraints:
-                        const BoxConstraints.tightFor(width: 20, height: 20),
-                    onPressed: () {
-                      day.breakFrom = null;
-                      day.breakTo = null;
-                      ref.read(createDayProvider.notifier).day = day;
-                    },
-                  ),
-                  title: GestureDetector(
-                    onTap: () {
-                      BottomPicker.date(
-                        title: tr('Break end'),
-                        titleStyle: Theme.of(context)
-                            .textTheme
-                            .subtitle2!
-                            .apply(fontWeightDelta: 2),
-                        onChange: (dynamic index) {
-                          final DateTime result = index as DateTime;
-                          day.breakTo = DateTime(
-                            result.year,
-                            result.month,
-                            result.day,
-                            day.breakTo?.hour ?? day.to.hour,
-                            day.breakTo?.minute ?? day.to.minute,
-                          );
-                          ref.read(createDayProvider.notifier).day = day;
-                        },
-                        backgroundColor: Theme.of(context).cardColor,
-                        pickerTextStyle: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .apply(fontWeightDelta: 2, fontSizeDelta: -2),
-                        initialDateTime: day.breakTo,
-                        minDateTime: day.from,
-                        maxDateTime: day.to,
-                        displaySubmitButton: false,
-                        dismissable: true,
-                        closeIconColor: Colors.transparent,
-                      ).show(context);
-                    },
-                    child: Text(
-                      DateFormat(
-                        'E d MMM y',
-                        context.locale.toString(),
-                      ).format(day.breakTo!),
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  trailing: GestureDetector(
-                    onTap: () {
-                      BottomPicker.time(
-                        title: tr('Break end'),
-                        titleStyle: Theme.of(context)
-                            .textTheme
-                            .subtitle2!
-                            .apply(fontWeightDelta: 2),
-                        onChange: (dynamic index) {
-                          final DateTime result = index as DateTime;
-                          day.breakTo = DateTime(
-                            day.breakTo?.year ?? day.to.year,
-                            day.breakTo?.month ?? day.to.month,
-                            day.breakTo?.day ?? day.to.day,
-                            result.hour,
-                            result.minute,
-                          );
-                          ref.read(createDayProvider.notifier).day = day;
-                        },
-                        use24hFormat:
-                            MediaQuery.of(context).alwaysUse24HourFormat,
-                        backgroundColor: Theme.of(context).cardColor,
-                        pickerTextStyle: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .apply(fontWeightDelta: 2, fontSizeDelta: -2),
-                        initialDateTime: day.breakTo,
-                        minDateTime: day.from,
-                        maxDateTime: day.to,
-                        displaySubmitButton: false,
-                        dismissable: true,
-                        closeIconColor: Colors.transparent,
-                      ).show(context);
-                    },
-                    child: Text(
-                      DateFormat(
-                        'H:mm',
-                        context.locale.toString(),
-                      ).format(day.to),
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
+                Text(
+                  tr('No break'),
+                  style: Theme.of(context).textTheme.caption,
                 ),
               ],
             ),
-          ),
-        SizedBox(height: 18.sp),
+          )
+        else
+          ListView(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: day.breaks
+                  .map<Widget>(
+                    (Break brk) => Card(
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            contentPadding:
+                                const EdgeInsets.only(left: 12, right: 16),
+                            leading: InkWell(
+                              onTap: () {
+                                day.breaks.remove(brk);
+                                ref.read(createDayProvider.notifier).day = day;
+                              },
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(32)),
+                              child: const Padding(
+                                padding: EdgeInsets.all(6),
+                                child: Icon(
+                                  Ionicons.close_outline,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                            title: Padding(
+                              padding: const EdgeInsets.only(left: 3),
+                              child: GestureDetector(
+                                onTap: () {
+                                  BottomPicker.date(
+                                    title: tr('Break from'),
+                                    titleStyle: Theme.of(context)
+                                        .textTheme
+                                        .subtitle2!
+                                        .apply(fontWeightDelta: 2),
+                                    onChange: (dynamic index) {
+                                      final DateTime result = index as DateTime;
+                                      brk.from = DateTime(
+                                          result.year,
+                                          result.month,
+                                          result.day,
+                                          brk.from.hour,
+                                          brk.from.minute);
+                                      ref.read(createDayProvider.notifier).day =
+                                          day;
+                                    },
+                                    backgroundColor:
+                                        Theme.of(context).cardColor,
+                                    pickerTextStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .apply(
+                                            fontWeightDelta: 2,
+                                            fontSizeDelta: -2),
+                                    initialDateTime: brk.from,
+                                    minDateTime: day.from,
+                                    maxDateTime: day.to,
+                                    displaySubmitButton: false,
+                                    dismissable: true,
+                                    closeIconColor: Colors.transparent,
+                                  ).show(context);
+                                },
+                                child: Text(
+                                  DateFormat('E d MMM y',
+                                          context.locale.toString())
+                                      .format(brk.from),
+                                  style: Theme.of(context).textTheme.subtitle2,
+                                ),
+                              ),
+                            ),
+                            trailing: GestureDetector(
+                              onTap: () {
+                                BottomPicker.time(
+                                  title: tr('Break from'),
+                                  titleStyle: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .apply(fontWeightDelta: 2),
+                                  onChange: (dynamic index) {
+                                    final DateTime result = index as DateTime;
+                                    day.breaks.removeLast();
+                                    brk.from = DateTime(
+                                        brk.from.year,
+                                        brk.from.month,
+                                        brk.from.day,
+                                        result.hour,
+                                        result.minute);
+                                    day.breaks.add(brk);
+                                    ref.read(createDayProvider.notifier).day =
+                                        day;
+                                  },
+                                  use24hFormat: MediaQuery.of(context)
+                                      .alwaysUse24HourFormat,
+                                  backgroundColor: Theme.of(context).cardColor,
+                                  pickerTextStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .apply(
+                                          fontWeightDelta: 2,
+                                          fontSizeDelta: -2),
+                                  initialDateTime: brk.from,
+                                  minDateTime: day.from,
+                                  maxDateTime: day.to,
+                                  displaySubmitButton: false,
+                                  dismissable: true,
+                                  closeIconColor: Colors.transparent,
+                                ).show(context);
+                              },
+                              child: Text(
+                                DateFormat('H:mm', context.locale.toString())
+                                    .format(brk.from),
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            leading: const SizedBox(),
+                            title: GestureDetector(
+                              onTap: () {
+                                BottomPicker.date(
+                                  title: tr('Break until'),
+                                  titleStyle: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .apply(fontWeightDelta: 2),
+                                  onChange: (dynamic index) {
+                                    final DateTime result = index as DateTime;
+                                    brk.to = DateTime(result.year, result.month,
+                                        result.day, brk.to.hour, brk.to.minute);
+                                    ref.read(createDayProvider.notifier).day =
+                                        day;
+                                  },
+                                  backgroundColor: Theme.of(context).cardColor,
+                                  pickerTextStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .apply(
+                                          fontWeightDelta: 2,
+                                          fontSizeDelta: -2),
+                                  initialDateTime: brk.to,
+                                  minDateTime: day.from,
+                                  maxDateTime: day.to,
+                                  displaySubmitButton: false,
+                                  dismissable: true,
+                                  closeIconColor: Colors.transparent,
+                                ).show(context);
+                              },
+                              child: Text(
+                                DateFormat(
+                                        'E d MMM y', context.locale.toString())
+                                    .format(brk.to),
+                                style: Theme.of(context).textTheme.subtitle2,
+                              ),
+                            ),
+                            trailing: GestureDetector(
+                              onTap: () {
+                                BottomPicker.time(
+                                  title: tr('Break until'),
+                                  titleStyle: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .apply(fontWeightDelta: 2),
+                                  onChange: (dynamic index) {
+                                    final DateTime result = index as DateTime;
+                                    day.breaks.removeLast();
+                                    brk.to = DateTime(brk.to.year, brk.to.month,
+                                        brk.to.day, result.hour, result.minute);
+                                    day.breaks.add(brk);
+                                    ref.read(createDayProvider.notifier).day =
+                                        day;
+                                  },
+                                  use24hFormat: MediaQuery.of(context)
+                                      .alwaysUse24HourFormat,
+                                  backgroundColor: Theme.of(context).cardColor,
+                                  pickerTextStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2!
+                                      .apply(
+                                          fontWeightDelta: 2,
+                                          fontSizeDelta: -2),
+                                  initialDateTime: brk.to,
+                                  minDateTime: day.from,
+                                  maxDateTime: day.to,
+                                  displaySubmitButton: false,
+                                  dismissable: true,
+                                  closeIconColor: Colors.transparent,
+                                ).show(context);
+                              },
+                              child: Text(
+                                DateFormat('H:mm', context.locale.toString())
+                                    .format(brk.to),
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList()),
+        SizedBox(height: 24.sp),
         const SectionTitle(
           padding: EdgeInsets.symmetric(horizontal: 4),
           text: 'Additional',

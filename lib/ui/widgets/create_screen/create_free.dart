@@ -37,7 +37,7 @@ class CreateFree extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   BottomPicker.date(
-                    title: tr('Vacation start'),
+                    title: tr('Vacation from'),
                     titleStyle: Theme.of(context)
                         .textTheme
                         .subtitle2!
@@ -82,7 +82,7 @@ class CreateFree extends ConsumerWidget {
               GestureDetector(
                 onTap: () {
                   BottomPicker.date(
-                    title: tr('Vacation end'),
+                    title: tr('Vacation until'),
                     titleStyle: Theme.of(context)
                         .textTheme
                         .subtitle2!
@@ -124,12 +124,12 @@ class CreateFree extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 24.sp),
         const SectionTitle(
           padding: EdgeInsets.symmetric(horizontal: 4),
           text: 'Additional',
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.sp),
         Card(
           elevation: 0,
           shape: const RoundedRectangleBorder(

@@ -41,7 +41,7 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget {
             statusBarIconBrightness: brightness == Brightness.dark
                 ? Brightness.light
                 : Brightness.dark),
-        backgroundColor: Theme.of(context).cardColor,
+        backgroundColor: Theme.of(context).bottomAppBarColor,
         elevation: 0,
         title: title,
         actions: actions,

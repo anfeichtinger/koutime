@@ -32,7 +32,8 @@ class SectionTitle extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             tr(text),
-            style: Theme.of(context).textTheme.caption,
+            style:
+                Theme.of(context).textTheme.caption!.apply(fontWeightDelta: 2),
           ),
           const Spacer(),
           trailing ?? const SizedBox(),

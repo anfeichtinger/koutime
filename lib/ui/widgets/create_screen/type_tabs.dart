@@ -12,8 +12,7 @@ class TypeTabs extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final DayUsage currentUsage =
-        ref.watch(createDayProvider).day.usage;
+    final DayUsage currentUsage = ref.watch(createDayProvider).day.usage;
     final Map<DayUsage, String> labels = <DayUsage, String>{
       DayUsage.shift: tr('Shift'),
       DayUsage.free: tr('Vacation'),
@@ -38,14 +37,17 @@ class TypeTabs extends ConsumerWidget {
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-                child: Container(
+            return InkWell(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                child: AnimatedContainer(
                   width: (constraints.maxWidth - 6) / 3,
                   decoration: BoxDecoration(
                       color: currentUsage == labels.keys.elementAt(index)
                           ? Theme.of(context).cardColor
                           : null,
-                      borderRadius: BorderRadius.circular(10)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
+                  duration: const Duration(milliseconds: 250),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
