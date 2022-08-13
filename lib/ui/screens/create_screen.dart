@@ -36,6 +36,8 @@ class CreateScreen extends ConsumerWidget {
           ),
         ),
       ),
+      extendBody: true,
+      backgroundColor: Theme.of(context).colorScheme.background,
       bottomNavigationBar: BottomApplicationBar(
         leftWidgets: <Widget>[
           IconButton(
@@ -46,7 +48,7 @@ class CreateScreen extends ConsumerWidget {
             tooltip: tr('Back'),
             icon: Icon(
               Ionicons.arrow_back_outline,
-              color: Theme.of(context).textTheme.bodyText2!.color,
+              color: Theme.of(context).textTheme.bodyMedium!.color,
             ),
           ),
         ],
@@ -64,7 +66,8 @@ class CreateScreen extends ConsumerWidget {
                   case DayUsage.sick:
                     day.from =
                         DateTime(day.from.year, day.from.month, day.from.day);
-                    day.to = DateTime(day.to.year, day.to.month, day.to.day, 23, 59, 59);
+                    day.to = DateTime(
+                        day.to.year, day.to.month, day.to.day, 23, 59, 59);
                     day.breaks.removeWhere((_) => true);
                     day.multiplier = 1;
                     db.store.box<Day>().put(day);
@@ -78,12 +81,12 @@ class CreateScreen extends ConsumerWidget {
             )
           : null,
       body: Material(
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         child: ListView(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             physics: const BouncingScrollPhysics(),
             children: <Widget>[
-              SizedBox(height: 24.sp),
+              SizedBox(height: 16.sp),
               const TypeTabs(),
               SizedBox(height: 16.sp),
               getPartialBasedOnUsage(day.usage),

@@ -33,8 +33,8 @@ class HomeEntry extends StatelessWidget {
                         .format(day.from),
                     softWrap: false,
                     style: Theme.of(context)
-                        .primaryTextTheme
-                        .caption!
+                        .textTheme
+                        .bodySmall!
                         .apply(color: Colors.white),
                   ),
                 ),
@@ -83,8 +83,8 @@ class HomeEntry extends StatelessWidget {
                           .format(day.to),
                       softWrap: false,
                       style: Theme.of(context)
-                          .primaryTextTheme
-                          .caption!
+                          .textTheme
+                          .bodySmall!
                           .apply(color: Colors.white),
                     ),
                   ),

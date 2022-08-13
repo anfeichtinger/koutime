@@ -30,7 +30,7 @@ class TypeTabs extends ConsumerWidget {
         height: 40,
         padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-            color: Theme.of(context).cardColor.withOpacity(.4),
+            color: Theme.of(context).colorScheme.surface.withOpacity(.4),
             borderRadius: BorderRadius.circular(12)),
         child: ListView.builder(
           itemCount: 3,
@@ -43,7 +43,7 @@ class TypeTabs extends ConsumerWidget {
                   width: (constraints.maxWidth - 6) / 3,
                   decoration: BoxDecoration(
                       color: currentUsage == labels.keys.elementAt(index)
-                          ? Theme.of(context).cardColor
+                          ? Theme.of(context).colorScheme.surfaceVariant
                           : null,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10))),
@@ -54,21 +54,26 @@ class TypeTabs extends ConsumerWidget {
                       children: <Widget>[
                         Icon(icons.values.elementAt(index),
                             size: 16,
-                            color: (currentUsage ==
-                                    labels.keys.elementAt(index))
-                                ? Theme.of(context).primaryColor
-                                : Theme.of(context).textTheme.bodyText2!.color),
+                            color:
+                                (currentUsage == labels.keys.elementAt(index))
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .color),
                         const SizedBox(width: 6),
                         Text(labels.values.elementAt(index),
                             textAlign: TextAlign.center,
-                            style: (currentUsage ==
-                                    labels.keys.elementAt(index))
-                                ? Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(
-                                        color: Theme.of(context).primaryColor)
-                                : Theme.of(context).textTheme.bodyText2),
+                            style:
+                                (currentUsage == labels.keys.elementAt(index))
+                                    ? Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary)
+                                    : Theme.of(context).textTheme.bodyMedium),
                       ],
                     ),
                   ),

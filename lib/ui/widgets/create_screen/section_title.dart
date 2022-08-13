@@ -25,15 +25,17 @@ class SectionTitle extends StatelessWidget {
             Icon(
               icon,
               size: 16,
-              color: Theme.of(context).textTheme.caption!.color,
+              color: Theme.of(context).textTheme.bodySmall!.color,
             )
           else
             const SizedBox(),
           const SizedBox(width: 4),
           Text(
             tr(text),
-            style:
-                Theme.of(context).textTheme.caption!.apply(fontWeightDelta: 2),
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .apply(fontWeightDelta: 2),
           ),
           const Spacer(),
           trailing ?? const SizedBox(),

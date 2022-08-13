@@ -31,17 +31,18 @@ dependencies:
     sdk: flutter
 
   flutter_riverpod: ^1.0.4
-  path_provider: ^2.0.10
+  path_provider: ^2.0.11
   flutter_displaymode: ^0.4.0
   easy_localization: ^3.0.1
-  url_launcher: ^6.1.2
-  ionicons: ^0.1.2
-  objectbox: ^1.5.0
+  url_launcher: ^6.1.5
+  ionicons: ^0.2.1
+  objectbox: ^1.6.0
   objectbox_flutter_libs: any
-  hive: ^2.2.1
+  hive: ^2.2.3
   hive_flutter: ^1.1.0
-  bottom_picker: ^1.8.0
+  bottom_picker: ^1.9.1
   flutter_screenutil: ^5.5.3+2
+  jiffy: ^5.0.0
 
 dev_dependencies:
   flutter_test:

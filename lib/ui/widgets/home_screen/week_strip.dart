@@ -5,30 +5,29 @@
 
 library month_strip;
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jiffy/jiffy.dart';
+
+import '../../../utils/jiff.dart';
 
 const PageScrollPhysics _kPagePhysics = PageScrollPhysics();
 
-class MonthStrip extends StatefulWidget {
-  const MonthStrip(
-      {super.key,
-      this.format = 'MMM yyyy',
-      required this.from,
-      required this.to,
-      required this.initialMonth,
-      required this.onMonthChanged,
-      this.physics,
-      this.height = 48.0,
-      this.viewportFraction = 0.45});
+class WeekStrip extends StatefulWidget {
+  const WeekStrip({
+    super.key,
+    required this.fromYear,
+    required this.toYear,
+    required this.onWeekChanged,
+    this.physics,
+    this.height = 48.0,
+    this.viewportFraction = 0.45,
+  });
 
-  final String format;
-  final DateTime from;
-  final DateTime to;
-  final DateTime initialMonth;
-  final ValueChanged<DateTime> onMonthChanged;
+  final int fromYear;
+  final int toYear;
+  final ValueChanged<DateTime> onWeekChanged;
   final double height;
   final double viewportFraction;
 
@@ -37,45 +36,40 @@ class MonthStrip extends StatefulWidget {
 
   @override
   // ignore: no_logic_in_create_state
-  MonthStripState createState() {
-    final List<MonthItem> months = <MonthItem>[];
+  WeekStripState createState() {
+    final Jiff from = Jiff(<int>[fromYear]);
+
+    final List<WeekItem> weeks = <WeekItem>[];
     int initialPage = 0;
-    for (int i = from.year; i <= to.year; i++) {
-      for (int j = 1; j <= 12; j++) {
-        if (i == from.year && j < from.month) {
-          continue;
-        }
 
-        if (i == to.year && j > to.month) {
-          continue;
-        }
+    from.startOf(Units.WEEK);
 
-        final MonthItem item = MonthItem(DateTime(i, j));
-        if (item.time.year == initialMonth.year &&
-            item.time.month == initialMonth.month) {
-          initialPage = months.length;
-          item.selected = true;
-        }
-        months.add(item);
+    while (from.year < toYear) {
+      final WeekItem item = WeekItem(from.dateTime);
+      if (from.week == Jiff().week) {
+        item.selected = true;
+        initialPage = weeks.length;
       }
+      weeks.add(item);
+      from.add(weeks: 1);
     }
 
-    return MonthStripState(
+    return WeekStripState(
         viewportFraction: viewportFraction,
         initialPage: initialPage,
-        months: months);
+        weeks: weeks);
   }
 }
 
-class MonthStripState extends State<MonthStrip> {
-  MonthStripState(
+class WeekStripState extends State<WeekStrip> {
+  WeekStripState(
       {required double viewportFraction,
       required int initialPage,
-      required this.months})
+      required this.weeks})
       : controller = PageController(
             viewportFraction: viewportFraction, initialPage: initialPage),
         _lastReportedPage = initialPage;
-  final List<MonthItem> months;
+  final List<WeekItem> weeks;
   final PageController controller;
   int _lastReportedPage;
 
@@ -94,13 +88,13 @@ class MonthStripState extends State<MonthStrip> {
               _lastReportedPage = currentPage;
 
               setState(() {
-                for (final MonthItem item in months) {
+                for (final WeekItem item in weeks) {
                   item.selected = false;
                 }
-                final MonthItem m = months[currentPage];
+                final WeekItem m = weeks[currentPage];
                 final DateTime d = m.time;
                 m.selected = true;
-                widget.onMonthChanged(DateTime(d.year, d.month));
+                widget.onWeekChanged(DateTime(d.year, d.month, d.day));
               });
             }
           }
@@ -118,7 +112,7 @@ class MonthStripState extends State<MonthStrip> {
                 SliverFillViewport(
                   viewportFraction: controller.viewportFraction,
                   delegate: SliverChildBuilderDelegate(_buildContent,
-                      childCount: months.length),
+                      childCount: weeks.length),
                 ),
               ],
             );
@@ -129,15 +123,15 @@ class MonthStripState extends State<MonthStrip> {
   }
 
   Widget _buildContent(BuildContext context, int index) {
-    final MonthItem item = months[index];
+    final WeekItem item = weeks[index];
     return AnimatedContainer(
       margin: item.selected ? EdgeInsets.all(6.sp) : EdgeInsets.all(8.sp),
       duration: const Duration(milliseconds: 250),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(99)),
         color: item.selected
-            ? Theme.of(context).bottomAppBarColor
-            : Theme.of(context).bottomAppBarColor.withOpacity(.5),
+            ? Theme.of(context).colorScheme.surfaceVariant
+            : Theme.of(context).colorScheme.surfaceVariant.withOpacity(.5),
       ),
       child: InkWell(
         onTap: () {
@@ -148,35 +142,36 @@ class MonthStripState extends State<MonthStrip> {
               curve: Curves.ease,
             );
           } else {
-            // Todo open month settings
+            // Todo open Week settings
           }
         },
-        splashColor: Theme.of(context).primaryColor,
+        splashColor: Theme.of(context).colorScheme.primary,
         borderRadius: const BorderRadius.all(Radius.circular(99)),
         child: Center(
           child: AnimatedScale(
             duration: const Duration(milliseconds: 250),
             scale: item.selected ? .9 : .8,
             child: Text(
-              DateFormat(widget.format, context.locale.toString())
-                  .format(item.time),
+              _getItemText(item),
               textAlign: TextAlign.center,
               style: item.selected
-                  ? Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .apply(fontWeightDelta: 2)
-                  : Theme.of(context).textTheme.bodyText2,
+                  ? Theme.of(context).textTheme.bodyLarge
+                  : Theme.of(context).textTheme.bodyMedium,
             ),
           ),
         ),
       ),
     );
   }
+
+  String _getItemText(WeekItem item) {
+    final Jiff jiff = Jiff(item.time);
+    return '${jiff.year} | Week ${jiff.week}';
+  }
 }
 
-class MonthItem {
-  MonthItem(this.time, {this.selected = false});
+class WeekItem {
+  WeekItem(this.time, {this.selected = false});
 
   final DateTime time;
 

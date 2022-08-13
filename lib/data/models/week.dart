@@ -3,13 +3,15 @@ import 'dart:convert';
 import 'package:objectbox/objectbox.dart';
 
 import 'day.dart';
-import 'month.dart';
+import 'year.dart';
 
 @Entity()
 class Week {
   int id = 0;
   int? number;
   double hourGoal = 30.0;
+  double carry = 0.0;
+  bool readonly = false;
   Map<int, bool> enabledDays = <int, bool>{
     DateTime.monday: true,
     DateTime.tuesday: true,
@@ -21,7 +23,7 @@ class Week {
   };
 
   /// Relations
-  final ToOne<Month> month = ToOne<Month>();
+  final ToOne<Year> year = ToOne<Year>();
   final Type days = ToMany<Day>;
 
   /// Map<int, bool> is not supported by ObjectBox.

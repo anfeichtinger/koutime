@@ -13,19 +13,19 @@ class TextDivider extends StatelessWidget {
       child: Row(children: <Widget>[
         Expanded(
           child: Divider(
-            color: Theme.of(context).dividerColor,
+            color: Theme.of(context).colorScheme.onBackground.withOpacity(.4),
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
             tr(text),
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         Expanded(
           child: Divider(
-            color: Theme.of(context).dividerColor,
+            color: Theme.of(context).colorScheme.onBackground.withOpacity(.4),
           ),
         ),
       ]),

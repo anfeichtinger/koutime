@@ -25,7 +25,7 @@ class CreateFree extends ConsumerWidget {
       children: <Widget>[
         Card(
           elevation: 0,
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).colorScheme.surface,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(16),
@@ -48,7 +48,7 @@ class CreateFree extends ConsumerWidget {
                           day.from.hour, day.from.minute);
                       ref.read(createDayProvider.notifier).day = day;
                     },
-                    backgroundColor: Theme.of(context).cardColor,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     pickerTextStyle: Theme.of(context)
                         .textTheme
                         .bodyText2!
@@ -66,16 +66,16 @@ class CreateFree extends ConsumerWidget {
                 child: ListTile(
                   leading: Icon(
                     Ionicons.time_outline,
-                    color: Theme.of(context).textTheme.caption!.color,
+                    color: Theme.of(context).textTheme.bodySmall!.color,
                   ),
                   title: Text(
                     tr('From'),
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   trailing: Text(
                     DateFormat('E d MMM y', context.locale.toString())
                         .format(day.from),
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
               ),
@@ -93,7 +93,7 @@ class CreateFree extends ConsumerWidget {
                           day.to.hour, day.to.minute);
                       ref.read(createDayProvider.notifier).day = day;
                     },
-                    backgroundColor: Theme.of(context).cardColor,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
                     pickerTextStyle: Theme.of(context)
                         .textTheme
                         .bodyText2!
@@ -112,12 +112,12 @@ class CreateFree extends ConsumerWidget {
                   leading: const SizedBox(),
                   title: Text(
                     'Until',
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   trailing: Text(
                     DateFormat('E d MMM y', context.locale.toString())
                         .format(day.to),
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
               ),
@@ -131,26 +131,27 @@ class CreateFree extends ConsumerWidget {
         ),
         SizedBox(height: 4.sp),
         Card(
+          color: Theme.of(context).colorScheme.surface,
           elevation: 0,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),
           child: ListTile(
             leading: Icon(
               Ionicons.chatbubble_ellipses_outline,
-              color: Theme.of(context).textTheme.caption!.color,
+              color: Theme.of(context).textTheme.bodySmall!.color,
             ),
             title: TextFormField(
               controller: commentController,
               keyboardType: TextInputType.text,
-              style: Theme.of(context).textTheme.subtitle2,
+              style: Theme.of(context).textTheme.labelLarge,
               decoration: InputDecoration(
                 hintText: tr('Add comment...'),
-                hintStyle: Theme.of(context).textTheme.bodyText1!.apply(
+                hintStyle: Theme.of(context).textTheme.labelLarge!.apply(
                       fontWeightDelta: -1,
                       fontSizeDelta: -1.sp,
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .labelLarge!
                           .color!
                           .withOpacity(0.6),
                     ),

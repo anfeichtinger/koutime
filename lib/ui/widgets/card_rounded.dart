@@ -36,7 +36,7 @@ class CardRounded extends StatelessWidget {
       return Center(
         widthFactor: 1,
         child: Icon(leadingIcon,
-            color: Theme.of(context).textTheme.bodyText1!.color),
+            color: Theme.of(context).textTheme.bodySmall!.color),
       );
     }
 
@@ -52,7 +52,7 @@ class CardRounded extends StatelessWidget {
     return Card(
       elevation: 0,
       margin: margin,
-      color: Theme.of(context).cardColor,
+      color: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(16),
@@ -62,7 +62,7 @@ class CardRounded extends StatelessWidget {
           ? InkWell(
               onTap: onPress,
               onLongPress: onLongPress,
-              splashColor: Theme.of(context).primaryColor,
+              splashColor: Theme.of(context).colorScheme.primary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(16),
               ),

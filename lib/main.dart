@@ -10,7 +10,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'config/router.dart';
 import 'config/theme.dart';
 import 'data/repository/object_box.dart';
-import 'states/theme_mode_state.dart';
+import 'states/widgets/settings/theme_mode_state.dart';
 
 /// Provides access to the ObjectBox Store throughout the app
 late ObjectBox db;

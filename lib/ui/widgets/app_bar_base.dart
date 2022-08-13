@@ -9,7 +9,7 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Brightness brightness = Theme.of(context).brightness;
+    final Brightness brightness = Theme.of(context).colorScheme.brightness;
 
     return Hero(
       tag: 'application_bar',
@@ -17,9 +17,9 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget {
         return Container(
           width: size.width,
           height: size.height,
-          decoration: const BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(16),
               bottomRight: Radius.circular(16),
             ),
@@ -27,6 +27,7 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget {
         );
       },
       child: AppBar(
+        elevation: 0,
         shadowColor: Colors.transparent,
         automaticallyImplyLeading: false,
         shape: const RoundedRectangleBorder(
@@ -37,12 +38,11 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget {
         ),
         toolbarHeight: 64,
         systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
+            statusBarColor: Theme.of(context).colorScheme.surfaceVariant,
             statusBarIconBrightness: brightness == Brightness.dark
                 ? Brightness.light
                 : Brightness.dark),
-        backgroundColor: Theme.of(context).bottomAppBarColor,
-        elevation: 0,
+        backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
         title: title,
         actions: actions,
       ),

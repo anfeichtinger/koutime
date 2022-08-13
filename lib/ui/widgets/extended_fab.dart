@@ -21,7 +21,7 @@ class ExtendedFab extends StatelessWidget {
     return FloatingActionButton.extended(
         elevation: 2,
         highlightElevation: 4,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         icon: Icon(
           icon,
           color: Colors.white,
@@ -29,8 +29,8 @@ class ExtendedFab extends StatelessWidget {
         label: Text(
           tr(text),
           style: Theme.of(context)
-              .primaryTextTheme
-              .subtitle2!
+              .textTheme
+              .bodyMedium!
               .copyWith(color: Colors.white),
         ),
         onPressed: onPressed);

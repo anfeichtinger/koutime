@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../states/theme_mode_state.dart';
+import '../../../states/widgets/settings/theme_mode_state.dart';
 
 class ThemeCard extends ConsumerWidget {
   const ThemeCard({
@@ -20,18 +20,18 @@ class ThemeCard extends ConsumerWidget {
     return Card(
       elevation: 0,
       color: state.themeMode == mode
-          ? Theme.of(context).primaryColor
-          : Theme.of(context).cardColor,
+          ? Theme.of(context).colorScheme.primary
+          : Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12))),
+          borderRadius: BorderRadius.all(Radius.circular(16))),
       child: InkWell(
         onTap: () => ref.watch(themeProvider.notifier).setThemeMode(mode),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
         child: Icon(
           icon,
           size: 32,
           color: state.themeMode != mode
-              ? Theme.of(context).primaryColor
+              ? Theme.of(context).colorScheme.primary
               : Colors.white,
         ),
       ),

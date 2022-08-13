@@ -1,34 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../config/router.dart';
 import '../../data/models/day.dart';
 import '../../main.dart';
 import '../../objectbox.g.dart';
-import '../../states/screens/home_screen/month_state.dart';
+import '../../states/screens/home_screen/week_state.dart';
+import '../../utils/jiff.dart';
 import '../widgets/bottom_application_bar.dart';
 import '../widgets/extended_fab.dart';
 import '../widgets/home_screen/app_bar_home.dart';
 import '../widgets/home_screen/home_entry.dart';
-import '../widgets/home_screen/month_strip.dart';
+import '../widgets/home_screen/week_strip.dart';
 import 'create_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   static const int dragSensitivity = 6;
-  static GlobalKey<MonthStripState> monthStripKey =
-      GlobalKey<MonthStripState>();
+  static GlobalKey<WeekStripState> weekStripKey = GlobalKey<WeekStripState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final DateTime selectedStart = ref.watch(monthProvider).start;
-    final DateTime selectedEnd = ref.watch(monthProvider).end;
+    final DateTime selectedStart = ref.watch(weekProvider).start;
+    final DateTime selectedEnd = ref.watch(weekProvider).end;
+
+    print(selectedStart);
+    print(selectedEnd);
 
     return Scaffold(
       appBar: const AppBarHome(),
       bottomNavigationBar: const BottomApplicationBar(),
+      backgroundColor: Theme.of(context).colorScheme.background,
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: ExtendedFab(
@@ -42,35 +47,32 @@ class HomeScreen extends ConsumerWidget {
         behavior: HitTestBehavior.translucent,
         onHorizontalDragEnd: (DragEndDetails details) {
           if (details.primaryVelocity! > dragSensitivity) {
-            monthStripKey.currentState!.controller.animateToPage(
-                (monthStripKey.currentState!.controller.page! - 1).toInt(),
+            weekStripKey.currentState!.controller.animateToPage(
+                (weekStripKey.currentState!.controller.page! - 1).toInt(),
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.ease);
           } else if (details.primaryVelocity! < -dragSensitivity) {
-            monthStripKey.currentState!.controller.animateToPage(
-                (monthStripKey.currentState!.controller.page! + 1).toInt(),
+            weekStripKey.currentState!.controller.animateToPage(
+                (weekStripKey.currentState!.controller.page! + 1).toInt(),
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.ease);
           }
         },
         child: Material(
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           child: Column(
             children: <Widget>[
-              MonthStrip(
-                key: monthStripKey,
+              SizedBox(height: 4.sp),
+              WeekStrip(
+                key: weekStripKey,
                 physics: const BouncingScrollPhysics(),
-                from: DateTime(2020),
-                to: DateTime.now().add(const Duration(days: 365)),
-                initialMonth: selectedStart,
-                onMonthChanged: (DateTime month) {
-                  ref.read(monthProvider.notifier).start =
-                      DateTime(month.year, month.month);
-                  ref.read(monthProvider.notifier).end =
-                      DateTime(month.year, month.month + 1, 0, 23, 59, 59);
+                fromYear: 2022,
+                toYear: Jiff().add(years: 1).year,
+                onWeekChanged: (DateTime week) {
+                  ref.read(weekProvider.notifier).setWeek(week);
                 },
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.sp),
               SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: ListView(

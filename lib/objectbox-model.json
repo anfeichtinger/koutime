@@ -4,40 +4,6 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:5192397300323129847",
-      "lastPropertyId": "6:6059709835430750520",
-      "name": "Month",
-      "properties": [
-        {
-          "id": "1:720396459505714038",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "3:4763516196634652698",
-          "name": "year",
-          "type": 6
-        },
-        {
-          "id": "4:148171271825199074",
-          "name": "number",
-          "type": 6
-        },
-        {
-          "id": "5:2477051764002624760",
-          "name": "carry",
-          "type": 8
-        },
-        {
-          "id": "6:6059709835430750520",
-          "name": "readonly",
-          "type": 1
-        }
-      ],
-      "relations": []
-    },
-    {
       "id": "2:6383508078216062810",
       "lastPropertyId": "9:9057858390306747444",
       "name": "Day",
@@ -92,7 +58,7 @@
     },
     {
       "id": "3:3382722117644197551",
-      "lastPropertyId": "5:3040054646814226925",
+      "lastPropertyId": "8:1459377801928631544",
       "name": "Week",
       "properties": [
         {
@@ -107,14 +73,6 @@
           "type": 6
         },
         {
-          "id": "3:7572205287680496916",
-          "name": "monthId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "2:5574288782125617866",
-          "relationTarget": "Month"
-        },
-        {
           "id": "4:7826563248356624414",
           "name": "dbEnabledDays",
           "type": 9
@@ -123,6 +81,24 @@
           "id": "5:3040054646814226925",
           "name": "hourGoal",
           "type": 8
+        },
+        {
+          "id": "6:6333480509075116577",
+          "name": "carry",
+          "type": 8
+        },
+        {
+          "id": "7:7563398742608728173",
+          "name": "readonly",
+          "type": 1
+        },
+        {
+          "id": "8:1459377801928631544",
+          "name": "yearId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:7347514166744717658",
+          "relationTarget": "Year"
         }
       ],
       "relations": []
@@ -158,20 +134,49 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "5:1201224325679945301",
+      "lastPropertyId": "2:5268078797407381304",
+      "name": "Year",
+      "properties": [
+        {
+          "id": "1:3199038759243670501",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5268078797407381304",
+          "name": "year",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "4:4573937638661044103",
-  "lastIndexId": "3:8779079937791312027",
+  "lastEntityId": "5:1201224325679945301",
+  "lastIndexId": "4:7347514166744717658",
   "lastRelationId": "1:95478718925891850",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
-  "retiredIndexUids": [],
+  "retiredEntityUids": [
+    5192397300323129847
+  ],
+  "retiredIndexUids": [
+    5574288782125617866
+  ],
   "retiredPropertyUids": [
     7660174233562581330,
     6058180800672501988,
-    9057858390306747444
+    9057858390306747444,
+    7572205287680496916,
+    720396459505714038,
+    4763516196634652698,
+    148171271825199074,
+    2477051764002624760,
+    6059709835430750520
   ],
   "retiredRelationUids": [],
   "version": 1

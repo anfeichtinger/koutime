@@ -25,7 +25,7 @@ class CreateSick extends ConsumerWidget {
       children: <Widget>[
         Card(
           elevation: 0,
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).colorScheme.surface,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(16),
@@ -38,21 +38,16 @@ class CreateSick extends ConsumerWidget {
                 onTap: () {
                   BottomPicker.date(
                     title: tr('Sick leave from'),
-                    titleStyle: Theme.of(context)
-                        .textTheme
-                        .subtitle2!
-                        .apply(fontWeightDelta: 2),
+                    titleStyle: Theme.of(context).textTheme.bodyLarge!,
                     onChange: (dynamic index) {
                       final DateTime result = index as DateTime;
                       day.from = DateTime(result.year, result.month, result.day,
                           day.from.hour, day.from.minute);
                       ref.read(createDayProvider.notifier).day = day;
                     },
-                    backgroundColor: Theme.of(context).cardColor,
-                    pickerTextStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .apply(fontWeightDelta: 2, fontSizeDelta: -2),
+                    backgroundColor:
+                        Theme.of(context).colorScheme.surfaceVariant,
+                    pickerTextStyle: Theme.of(context).textTheme.bodyLarge!,
                     initialDateTime: day.from,
                     minDateTime: DateTime(1970),
                     maxDateTime: DateTime.now().add(
@@ -67,16 +62,16 @@ class CreateSick extends ConsumerWidget {
                   // visualDensity: VisualDensity.compact,
                   leading: Icon(
                     Ionicons.time_outline,
-                    color: Theme.of(context).textTheme.caption!.color,
+                    color: Theme.of(context).textTheme.bodySmall!.color,
                   ),
                   title: Text(
                     tr('From'),
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   trailing: Text(
                     DateFormat('E d MMM y', context.locale.toString())
                         .format(day.from),
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
               ),
@@ -84,21 +79,16 @@ class CreateSick extends ConsumerWidget {
                 onTap: () {
                   BottomPicker.date(
                     title: tr('Sick leave until'),
-                    titleStyle: Theme.of(context)
-                        .textTheme
-                        .subtitle2!
-                        .apply(fontWeightDelta: 2),
+                    titleStyle: Theme.of(context).textTheme.bodyLarge!,
                     onChange: (dynamic index) {
                       final DateTime result = index as DateTime;
                       day.to = DateTime(result.year, result.month, result.day,
                           day.to.hour, day.to.minute);
                       ref.read(createDayProvider.notifier).day = day;
                     },
-                    backgroundColor: Theme.of(context).cardColor,
-                    pickerTextStyle: Theme.of(context)
-                        .textTheme
-                        .bodyText2!
-                        .apply(fontWeightDelta: 2, fontSizeDelta: -2),
+                    backgroundColor:
+                        Theme.of(context).colorScheme.surfaceVariant,
+                    pickerTextStyle: Theme.of(context).textTheme.bodyLarge!,
                     initialDateTime: day.to,
                     minDateTime: DateTime(1970),
                     maxDateTime: DateTime.now().add(
@@ -114,12 +104,12 @@ class CreateSick extends ConsumerWidget {
                   leading: const SizedBox(),
                   title: Text(
                     'Until',
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   trailing: Text(
                     DateFormat('E d MMM y', context.locale.toString())
                         .format(day.to),
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
               ),
@@ -134,25 +124,26 @@ class CreateSick extends ConsumerWidget {
         SizedBox(height: 4.sp),
         Card(
           elevation: 0,
+          color: Theme.of(context).colorScheme.surface,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),
           child: ListTile(
             leading: Icon(
               Ionicons.chatbubble_ellipses_outline,
-              color: Theme.of(context).textTheme.caption!.color,
+              color: Theme.of(context).textTheme.bodySmall!.color,
             ),
             title: TextFormField(
               controller: commentController,
               keyboardType: TextInputType.text,
-              style: Theme.of(context).textTheme.subtitle2,
+              style: Theme.of(context).textTheme.labelLarge,
               decoration: InputDecoration(
                 hintText: tr('Add comment...'),
-                hintStyle: Theme.of(context).textTheme.bodyText1!.apply(
+                hintStyle: Theme.of(context).textTheme.labelLarge!.apply(
                       fontWeightDelta: -1,
                       fontSizeDelta: -1.sp,
                       color: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .labelLarge!
                           .color!
                           .withOpacity(0.6),
                     ),

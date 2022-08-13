@@ -22,7 +22,7 @@ class BottomApplicationBar extends StatelessWidget {
       child: Card(
         elevation: 0,
         margin: EdgeInsets.zero,
-        color: Theme.of(context).bottomAppBarColor,
+        color: Theme.of(context).colorScheme.surfaceVariant,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
