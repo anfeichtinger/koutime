@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:jiffy/jiffy.dart';
 
 import '../../data/enums/day_usage_enum.dart';
 import '../../data/models/day.dart';
 import '../../main.dart';
 import '../../states/screens/create_screen/create_day_states.dart';
+import '../../utils/jiff.dart';
 import '../widgets/app_bar_base.dart';
 import '../widgets/bottom_application_bar.dart';
 import '../widgets/create_screen/create_free.dart';
@@ -23,16 +25,17 @@ class CreateScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     final Day day = ref.watch(createDayProvider).day;
+
     return Scaffold(
       appBar: AppBarBase(
         title: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Text(
             tr('Add appointment'),
-            style: Theme.of(context)
-                .textTheme
-                .headline6!
-                .apply(fontWeightDelta: 1, fontSizeDelta: -1),
+            style: Theme.of(context).textTheme.headline6!.apply(
+                  fontWeightDelta: 1,
+                  fontSizeDelta: -1,
+                ),
           ),
         ),
       ),
@@ -60,22 +63,40 @@ class CreateScreen extends ConsumerWidget {
               text: 'Save',
               onPressed: () {
                 // Todo validation
-                switch (day.usage) {
-                  case DayUsage.holiday:
-                  case DayUsage.free:
-                  case DayUsage.sick:
-                    day.from =
-                        DateTime(day.from.year, day.from.month, day.from.day);
-                    day.to = DateTime(
-                        day.to.year, day.to.month, day.to.day, 23, 59, 59);
-                    day.breaks.removeWhere((_) => true);
-                    day.multiplier = 1;
-                    db.store.box<Day>().put(day);
-                    break;
-                  case DayUsage.shift:
-                    // Todo create shift
-                    break;
+
+                final Jiff dayFrom = Jiff(day.from);
+                final Jiff dayTo = Jiff(day.to);
+                final int weeks = dayTo.week - dayFrom.week;
+
+                for (int i = 0; i <= weeks; i++) {
+                  Jiff from = Jiff(dayFrom.dateTime).add(weeks: i);
+                  Jiff to = Jiff(dayTo.dateTime);
+
+                  // Not the last of many weeks
+                  if (i == 0 && weeks > 0) {
+                    to = Jiff(from.dateTime).endOf(Units.WEEK);
+                  }
+                  // Not the first of many weeks
+                  if (i == weeks && weeks > 0) {
+                    from = Jiff(to.dateTime).startOf(Units.WEEK);
+                  }
+
+                  final Day tmpDay = Day(
+                    from: from.dateTime,
+                    to: to.dateTime,
+                    usage: day.usage,
+                    multiplier: day.multiplier,
+                    comment: day.comment,
+                  );
+                  if (day.breaks.isEmpty) {
+                    tmpDay.breaks.removeWhere((_) => true);
+                  } else {
+                    // Todo split breaks if necessary
+                    tmpDay.breaks.addAll(day.breaks);
+                  }
+                  db.store.box<Day>().put(tmpDay);
                 }
+
                 Navigator.of(context).pop(day);
               },
             )

@@ -150,13 +150,16 @@ class WeekStripState extends State<WeekStrip> {
         child: Center(
           child: AnimatedScale(
             duration: const Duration(milliseconds: 250),
-            scale: item.selected ? .9 : .8,
+            scale: item.selected ? .9 : .75,
             child: Text(
               _getItemText(item),
               textAlign: TextAlign.center,
               style: item.selected
                   ? Theme.of(context).textTheme.bodyLarge
-                  : Theme.of(context).textTheme.bodyMedium,
+                  : Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .apply(fontWeightDelta: -2),
             ),
           ),
         ),

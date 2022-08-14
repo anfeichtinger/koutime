@@ -6,6 +6,8 @@ import 'package:ionicons/ionicons.dart';
 import '../../../config/router.dart';
 import '../../../config/theme.dart';
 import '../../../data/enums/animation_direction.dart';
+import '../../../data/models/day.dart';
+import '../../../main.dart';
 import '../../screens/settings_screen.dart';
 
 class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
@@ -62,10 +64,20 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
                         primarySwatch.shade300,
                         //add more color here.
                       ],
-                    ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))),
+                    ).createShader(
+                        const Rect.fromLTWH(0.0, 0.0, 200.0, 100.0))),
             ),
           ),
           actions: <Widget>[
+            IconButton(
+              onPressed: () => db.store.box<Day>().removeAll(),
+              tooltip: tr('Delete all days'),
+              splashRadius: 28,
+              icon: Icon(
+                Ionicons.trash_outline,
+                color: Theme.of(context).textTheme.bodyMedium!.color,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(right: 12),
               child: IconButton(
@@ -80,7 +92,7 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
                   color: Theme.of(context).textTheme.bodyMedium!.color,
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

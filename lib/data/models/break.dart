@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'day.dart';
@@ -22,5 +23,13 @@ class Break {
   @override
   String toString() {
     return 'Break{id: $id, from: $from, to: $to}';
+  }
+
+  String getFormattedString() {
+    String format = 'HH:mm';
+    if (from.day != to.day) {
+      format = 'd.m.Y HH:m,';
+    }
+    return '${DateFormat(format).format(from)} - ${DateFormat(format).format(to)}';
   }
 }

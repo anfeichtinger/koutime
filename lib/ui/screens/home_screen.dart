@@ -27,8 +27,7 @@ class HomeScreen extends ConsumerWidget {
     final DateTime selectedStart = ref.watch(weekProvider).start;
     final DateTime selectedEnd = ref.watch(weekProvider).end;
 
-    print(selectedStart);
-    print(selectedEnd);
+    print(db.store.box<Day>().getAll());
 
     return Scaffold(
       appBar: const AppBarHome(),
@@ -77,7 +76,7 @@ class HomeScreen extends ConsumerWidget {
                 physics: const BouncingScrollPhysics(),
                 child: ListView(
                   shrinkWrap: true,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   physics: const BouncingScrollPhysics(),
                   children: (db.store.box<Day>().query(Day_.from
                           .between(selectedStart.millisecondsSinceEpoch,

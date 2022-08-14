@@ -23,4 +23,43 @@ class Jiff extends Jiffy {
     }
     return weekDays[weekDayIndex];
   }
+
+  @override
+  Jiff startOf(Units units) {
+    return Jiff(super.startOf(units).dateTime);
+  }
+
+  @override
+  Jiff endOf(Units units) {
+    return Jiff(super.endOf(units).dateTime);
+  }
+
+  @override
+  Jiff add({
+    Duration duration = Duration.zero,
+    int years = 0,
+    int months = 0,
+    int weeks = 0,
+    int days = 0,
+    int hours = 0,
+    int minutes = 0,
+    int seconds = 0,
+    int milliseconds = 0,
+    int microseconds = 0,
+  }) {
+    return Jiff(super
+        .add(
+          duration: duration,
+          years: years,
+          months: months,
+          weeks: weeks,
+          days: days,
+          hours: hours,
+          minutes: minutes,
+          seconds: seconds,
+          milliseconds: milliseconds,
+          microseconds: microseconds,
+        )
+        .dateTime);
+  }
 }

@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:objectbox/objectbox.dart';
 
+import '../../utils/jiff.dart';
 import '../enums/day_usage_enum.dart';
 import 'break.dart';
 import 'week.dart';
@@ -50,5 +53,32 @@ class Day {
   @override
   String toString() {
     return 'Day{id: $id, from: $from, to: $to, usage: $usage, multiplier: $multiplier, comment: $comment}';
+  }
+
+  String getActiveHourCount() {
+    if (usage != DayUsage.shift || this.from == null || this.to == null) {
+      return '0';
+    }
+    final Jiff from = Jiff(this.from);
+    final Jiff to = Jiff(this.to);
+
+    final double workingMinutes = to.diff(from, Units.MINUTE, true).toDouble();
+    double breakMinutes = 0;
+
+    for (final Break b in breaks) {
+      breakMinutes +=
+          Jiff(b.to).diff(Jiff(b.from), Units.MINUTE, true).toDouble();
+    }
+
+    final double result = ((workingMinutes - breakMinutes) * multiplier) / 60;
+    return result.toStringAsFixed(result.truncateToDouble() == result ? 0 : 1);
+  }
+
+  String getFormattedString() {
+    String format = 'HH:mm';
+    // if (from.day != to.day) {
+    //   format = 'd.m.Y HH:mm';
+    // }
+    return '${DateFormat(format).format(from)} - ${DateFormat(format).format(to)}';
   }
 }
