@@ -65,6 +65,11 @@ final ThemeData lightTheme = ThemeData(
   colorScheme: lightColorScheme,
   fontFamily: 'Nunito',
   toggleableActiveColor: primarySwatch.shade500,
+  tooltipTheme: TooltipThemeData(
+    decoration: BoxDecoration(
+        color: textSwatch.shade600,
+        borderRadius: const BorderRadius.all(Radius.circular(99))),
+  ),
   textTheme: TextTheme(
     displayLarge: TextStyle(
       color: textSwatch.shade700,
@@ -152,6 +157,11 @@ final ThemeData lightTheme = ThemeData(
 final ThemeData darkTheme = lightTheme.copyWith(
   colorScheme: darkColorScheme,
   toggleableActiveColor: primarySwatch.shade500,
+  tooltipTheme: TooltipThemeData(
+    decoration: BoxDecoration(
+        color: textSwatch.shade200,
+        borderRadius: const BorderRadius.all(Radius.circular(99))),
+  ),
   textTheme: TextTheme(
     displayLarge: TextStyle(
       color: textSwatch.shade200,

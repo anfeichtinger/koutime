@@ -59,8 +59,8 @@ class CreateScreen extends ConsumerWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: showFab
           ? ExtendedFab(
-              icon: Ionicons.save_outline,
-              text: 'Save',
+              icon: Ionicons.add_outline,
+              text: 'Add',
               onPressed: () {
                 // Todo validation
 

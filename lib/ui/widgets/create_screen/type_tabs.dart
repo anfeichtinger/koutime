@@ -23,27 +23,36 @@ class TypeTabs extends ConsumerWidget {
       DayUsage.free: Ionicons.airplane_outline,
       DayUsage.sick: Ionicons.medkit_outline
     };
+    final ThemeData theme = Theme.of(context);
 
     return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      return Container(
-        height: 40,
-        padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface.withOpacity(.4),
-            borderRadius: BorderRadius.circular(12)),
-        child: ListView.builder(
-          itemCount: 3,
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            return InkWell(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Container(
+          height: 40,
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            color: theme.colorScheme.surface.withOpacity(.4),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+          ),
+          child: ListView.builder(
+            itemCount: 3,
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) {
+              final bool isCurrent =
+                  currentUsage == labels.keys.elementAt(index);
+              return InkWell(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 child: AnimatedContainer(
                   width: (constraints.maxWidth - 6) / 3,
                   decoration: BoxDecoration(
-                      color: currentUsage == labels.keys.elementAt(index)
-                          ? Theme.of(context).colorScheme.surfaceVariant
+                      color:
+                          isCurrent ? theme.colorScheme.surfaceVariant : null,
+                      border: isCurrent
+                          ? Border.all(
+                              color: theme.colorScheme.shadow,
+                              width: 0.75,
+                            )
                           : null,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10))),
@@ -56,24 +65,16 @@ class TypeTabs extends ConsumerWidget {
                             size: 16,
                             color:
                                 (currentUsage == labels.keys.elementAt(index))
-                                    ? Theme.of(context).colorScheme.primary
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .color),
+                                    ? theme.colorScheme.primary
+                                    : theme.textTheme.bodyMedium!.color),
                         const SizedBox(width: 6),
                         Text(labels.values.elementAt(index),
                             textAlign: TextAlign.center,
-                            style:
-                                (currentUsage == labels.keys.elementAt(index))
-                                    ? Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary)
-                                    : Theme.of(context).textTheme.bodyMedium),
+                            style: (currentUsage ==
+                                    labels.keys.elementAt(index))
+                                ? theme.textTheme.bodyMedium!
+                                    .copyWith(color: theme.colorScheme.primary)
+                                : theme.textTheme.bodyMedium),
                       ],
                     ),
                   ),
@@ -84,10 +85,12 @@ class TypeTabs extends ConsumerWidget {
                     day.usage = labels.keys.elementAt(index);
                     ref.read(createDayProvider.notifier).day = day;
                   }
-                });
-          },
-        ),
-      );
-    });
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }

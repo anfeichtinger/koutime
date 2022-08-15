@@ -25,7 +25,8 @@ class CreateShift extends ConsumerWidget {
       shrinkWrap: true,
       children: <Widget>[
         Card(
-          elevation: 0,
+          elevation: 1,
+          shadowColor: Theme.of(context).colorScheme.shadow,
           color: Theme.of(context).colorScheme.surface,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
@@ -255,7 +256,8 @@ class CreateShift extends ConsumerWidget {
               children: day.breaks
                   .map<Widget>(
                     (Break brk) => Card(
-                      elevation: 0,
+                      elevation: 1,
+                      shadowColor: Theme.of(context).colorScheme.shadow,
                       color: Theme.of(context).colorScheme.surface,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16)),
@@ -445,7 +447,8 @@ class CreateShift extends ConsumerWidget {
         ),
         SizedBox(height: 4.sp),
         Card(
-          elevation: 0,
+          elevation: 1,
+          shadowColor: Theme.of(context).colorScheme.shadow,
           color: Theme.of(context).colorScheme.surface,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),

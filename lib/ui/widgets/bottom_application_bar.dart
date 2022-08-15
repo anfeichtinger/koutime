@@ -20,7 +20,8 @@ class BottomApplicationBar extends StatelessWidget {
         );
       },
       child: Card(
-        elevation: 0,
+        elevation: 6,
+        shadowColor: Theme.of(context).colorScheme.shadow,
         margin: EdgeInsets.zero,
         color: Theme.of(context).colorScheme.surfaceVariant,
         shape: const RoundedRectangleBorder(

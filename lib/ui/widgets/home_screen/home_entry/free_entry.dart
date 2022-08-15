@@ -29,7 +29,7 @@ class FreeEntry extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    DateFormat('E dd.MM', context.locale.toString())
+                    DateFormat('E, dd.MM', context.locale.toString())
                         .format(day.from),
                     softWrap: false,
                     style: Theme.of(context)
@@ -77,7 +77,7 @@ class FreeEntry extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    DateFormat('E dd.MM', context.locale.toString())
+                    DateFormat('E, dd.MM', context.locale.toString())
                         .format(day.to),
                     softWrap: false,
                     style: Theme.of(context)

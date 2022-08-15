@@ -76,9 +76,9 @@ class Day {
 
   String getFormattedString() {
     String format = 'HH:mm';
-    // if (from.day != to.day) {
-    //   format = 'd.m.Y HH:mm';
-    // }
+    if (from.day != to.day) {
+      format = 'E, HH:mm';
+    }
     return '${DateFormat(format).format(from)} - ${DateFormat(format).format(to)}';
   }
 }

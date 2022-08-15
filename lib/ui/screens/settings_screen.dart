@@ -60,7 +60,8 @@ class SettingsScreen extends StatelessWidget {
           children: <Widget>[
             SizedBox(height: 8.sp),
             Card(
-              elevation: 0,
+              elevation: 1,
+              shadowColor: Theme.of(context).colorScheme.shadow,
 
               /// Example: Many items have their own colors inside of the ThemData
               /// You can overwrite them in [config/theme.dart].
@@ -80,7 +81,7 @@ class SettingsScreen extends StatelessWidget {
                 value: context.locale == const Locale('de'),
                 title: Row(
                   children: <Widget>[
-                    Icon(Ionicons.text_outline,
+                    Icon(Ionicons.language_outline,
                         color: Theme.of(context).colorScheme.primary),
                     const SizedBox(width: 16),
                     Text(

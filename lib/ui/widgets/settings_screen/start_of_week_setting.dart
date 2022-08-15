@@ -16,7 +16,8 @@ class StartOfWeekSetting extends ConsumerWidget {
     final StartOfWeekState state = ref.watch(startOfWeekProvider);
 
     return Card(
-      elevation: 0,
+      elevation: 1,
+      shadowColor: Theme.of(context).colorScheme.shadow,
       color: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16))),

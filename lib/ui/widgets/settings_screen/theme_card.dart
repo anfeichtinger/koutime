@@ -18,7 +18,8 @@ class ThemeCard extends ConsumerWidget {
     final ThemeModeState state = ref.watch(themeProvider);
 
     return Card(
-      elevation: 0,
+      elevation: 1,
+      shadowColor: Theme.of(context).colorScheme.shadow,
       color: state.themeMode == mode
           ? Theme.of(context).colorScheme.primary
           : Theme.of(context).colorScheme.surface,

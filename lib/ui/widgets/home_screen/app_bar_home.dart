@@ -35,7 +35,6 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
           );
         },
         child: AppBar(
-          shadowColor: Colors.transparent,
           automaticallyImplyLeading: false,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -50,7 +49,8 @@ class AppBarHome extends StatelessWidget implements PreferredSizeWidget {
                   ? Brightness.light
                   : Brightness.dark),
           backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-          elevation: 1,
+          elevation: 3,
+          shadowColor: Theme.of(context).colorScheme.shadow,
           title: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(

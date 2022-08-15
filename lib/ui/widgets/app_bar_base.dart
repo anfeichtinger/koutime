@@ -27,8 +27,8 @@ class AppBarBase extends StatelessWidget implements PreferredSizeWidget {
         );
       },
       child: AppBar(
-        elevation: 0,
-        shadowColor: Colors.transparent,
+        elevation: 3,
+        shadowColor: Theme.of(context).colorScheme.shadow,
         automaticallyImplyLeading: false,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(

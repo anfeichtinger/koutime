@@ -50,7 +50,8 @@ class CardRounded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0,
+      elevation: 1,
+      shadowColor: Theme.of(context).colorScheme.shadow,
       margin: margin,
       color: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(

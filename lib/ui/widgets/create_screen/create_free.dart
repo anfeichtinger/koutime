@@ -24,7 +24,8 @@ class CreateFree extends ConsumerWidget {
       shrinkWrap: true,
       children: <Widget>[
         Card(
-          elevation: 0,
+          elevation: 1,
+          shadowColor: Theme.of(context).colorScheme.shadow,
           color: Theme.of(context).colorScheme.surface,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
@@ -132,7 +133,8 @@ class CreateFree extends ConsumerWidget {
         SizedBox(height: 4.sp),
         Card(
           color: Theme.of(context).colorScheme.surface,
-          elevation: 0,
+          elevation: 1,
+          shadowColor: Theme.of(context).colorScheme.shadow,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),
           child: ListTile(

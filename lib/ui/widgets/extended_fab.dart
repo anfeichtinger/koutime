@@ -19,8 +19,8 @@ class ExtendedFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
-        elevation: 2,
-        highlightElevation: 4,
+        elevation: 3,
+        highlightElevation: 6,
         backgroundColor: Theme.of(context).colorScheme.primary,
         icon: Icon(
           icon,
